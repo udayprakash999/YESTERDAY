@@ -71,11 +71,13 @@ function runCommand() {
     msgShow("look - Inspect the computer");
     msgShow("hello - Talk to the computer");
     msgShow("read - Find a mysterious message");
-    msgShow("clear - Clear the screen");
     msgShow("search - Search the archives");
     msgShow("unlock 1789 - Unlock hidden files");
     msgShow("listen - Listen to the computer");
     msgShow("status - Check your progress");
+    msgShow("Files - View Discovered files");
+    msgShow("Read memory.txt - Read the hidden file");
+    msgShow("clear - Clear the screen");
   } else if (command === "look") {
     msgShow("...");
     msgShow("Dust covers the old computer.");
@@ -115,12 +117,35 @@ function runCommand() {
 
       msgShow("PASSWORD ACCEPTED.", "clue");
       msgShow("OPENING memory.txt...");
-      msgShow("MESSAGE: IF YOU FOUND THIS, I AM STILL ALIVE.", "clue");
       msgShow("NEW CLUE: FIND THE COMMAND I FORGOT.");
 
       saveGame();
     }
-  } else if (command === "listen") {
+  }else if(command === "files"){
+    msgShow("SCANNING STORAGE..");
+
+    if(fileFound){
+      msgShow("AVAILABLE FILES:")
+      msgShow("memory.txt", "clue");
+
+    }else{
+      msgShow("NO FILES FOUND.");
+    }
+  }else if(command === "read memory.txt"){
+    
+    if(!fileFound){
+      msgShow("ERROR: FILE NOT EXIST.")
+    }else if (!fileUnlocked){
+      msgShow("ERROR: FILE LOCKED.")
+      msgShow("PASSWORD REQUIRED.")
+    }else{
+      msgShow("OPENING memory.txt...");
+      msgShow("IF YOU FOUND THIS, I AM STILL ALIVE.", "clue");
+      msgShow("NEW CLUE: THE ARCHIVIST.", "clue");
+    }
+  }
+  
+  else if (command === "listen") {
     msgShow("LISTENING...");
     showRanmsg();
   } else if (command === "status") {
@@ -144,5 +169,4 @@ input.addEventListener("keydown", function (e) {
     runCommand();
   }
 });
-
 loadGame();
