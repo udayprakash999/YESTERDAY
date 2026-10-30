@@ -1,5 +1,5 @@
 # YESTERDAY
-- its a retro style terminal game where user iinteract with a mysterious computer by typing commands and solving clues.
+- Yesterday is a retro style terminal game where user iinteract with a mysterious computer by typing commands and solving clues.
 
 ## PROJECT STATUS 
 - Currently in early development.
@@ -9,3 +9,4 @@
 - password based file unlock
 - player progress
 - game progress added
+- added hidden file system and file access.

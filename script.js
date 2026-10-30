@@ -121,31 +121,27 @@ function runCommand() {
 
       saveGame();
     }
-  }else if(command === "files"){
+  } else if (command === "files") {
     msgShow("SCANNING STORAGE..");
 
-    if(fileFound){
-      msgShow("AVAILABLE FILES:")
+    if (fileFound) {
+      msgShow("AVAILABLE FILES:");
       msgShow("memory.txt", "clue");
-
-    }else{
+    } else {
       msgShow("NO FILES FOUND.");
     }
-  }else if(command === "read memory.txt"){
-    
-    if(!fileFound){
-      msgShow("ERROR: FILE NOT EXIST.")
-    }else if (!fileUnlocked){
-      msgShow("ERROR: FILE LOCKED.")
-      msgShow("PASSWORD REQUIRED.")
-    }else{
+  } else if (command === "read memory.txt") {
+    if (!fileFound) {
+      msgShow("ERROR: FILE NOT EXIST.");
+    } else if (!fileUnlocked) {
+      msgShow("ERROR: FILE LOCKED.");
+      msgShow("PASSWORD REQUIRED.");
+    } else {
       msgShow("OPENING memory.txt...");
       msgShow("IF YOU FOUND THIS, I AM STILL ALIVE.", "clue");
       msgShow("NEW CLUE: THE ARCHIVIST.", "clue");
     }
-  }
-  
-  else if (command === "listen") {
+  } else if (command === "listen") {
     msgShow("LISTENING...");
     showRanmsg();
   } else if (command === "status") {
@@ -166,6 +162,11 @@ runBtn.addEventListener("click", runCommand);
 
 input.addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
+    const command = input.value.trim();
+    if(command !== ""){
+      commandHistory.push(command);
+      historyIndex = commandHistory.length;
+    }
     runCommand();
   }
 });
