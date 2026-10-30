@@ -6,3 +6,6 @@
 - Basic HTML structure completed
 - retro terminal structure added using CSS
 - Interactive commands added using JS
+- password based file unlock
+- player progress
+- game progress added

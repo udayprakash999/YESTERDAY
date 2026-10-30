@@ -6,8 +6,9 @@ let fileFound = false;
 let fileUnlocked = false;
 let clueFound = 0;
 
+// history
 let commandHistory = [];
-let historyIndex = 0;
+let historyIndex = -1;
 
 //comptr msg
 const randomMsg = [
@@ -15,9 +16,10 @@ const randomMsg = [
   "WHY DID YOU COME BACK?",
   "SOMEONE WAS HERE BEFORE YOU.",
   "DO NOT TRUST THE ARCHIVES.",
-  "I REMEMBER EVERYTGING.",
-  "ARE YOU STILL THERE?"
+  "I REMEMBER EVERYTHING.",
+  "ARE YOU STILL THERE?",
 ];
+
 function msgShow(msg, className = "") {
   const line = document.createElement("p");
   line.textContent = msg;
@@ -28,7 +30,36 @@ function msgShow(msg, className = "") {
   screen.appendChild(line);
   screen.scrollTop = screen.scrollHeight;
 }
+function showRanmsg() {
+  const randomIndex = Math.floor(Math.random() * randomMsg.length);
+  msgShow(randomMsg[randomIndex], "clue");
+}
+//save game
+function saveGame() {
+  const gameData = {
+    fileFound: fileFound,
+    fileUnlocked: fileUnlocked,
+    clueFound: clueFound,
+  };
+  localStorage.setItem("yesterdaySave", JSON.stringify(gameData));
+}
 
+//load
+function loadGame() {
+  const savedGame = localStorage.getItem("yesterdaySave");
+
+  if (savedGame) {
+    try {
+      const gameData = JSON.parse(savedGame);
+
+      fileFound = gameData.fileFound === true;
+      fileUnlocked = gameData.fileUnlocked === true;
+      clueFound = Number(gameData.clueFound) || 0;
+    } catch (err) {
+      console.log("savefile failed");
+    }
+  }
+}
 function runCommand() {
   const command = input.value.trim().toLowerCase();
 
@@ -41,6 +72,10 @@ function runCommand() {
     msgShow("hello - Talk to the computer");
     msgShow("read - Find a mysterious message");
     msgShow("clear - Clear the screen");
+    msgShow("search - Search the archives");
+    msgShow("unlock 1789 - Unlock hidden files");
+    msgShow("listen - Listen to the computer");
+    msgShow("status - Check your progress");
   } else if (command === "look") {
     msgShow("...");
     msgShow("Dust covers the old computer.");
@@ -55,14 +90,44 @@ function runCommand() {
     msgShow("THE YEAR IS THE KEY.", "clue");
   } else if (command === "search") {
     msgShow("SEARCHING ARCHIVES...");
-    msgShow("HIDDEN FILE FOUND: memory.txt", "clue");
-    msgShow("HINT: THE PASSWORD IS THE ....");
-    msgShow("YEAR");
+
+    if (!fileFound) {
+      fileFound = true;
+      clueFound++;
+
+      msgShow("HIDDEN FILE FOUND: memory.txt", "clue");
+      msgShow("HINT: THE PASSWORD IS THE ....");
+      msgShow("YEAR");
+
+      saveGame();
+    } else {
+      msgShow("FILE ALREADY DISCOVERED.");
+    }
   } else if (command === "unlock 1789") {
-    msgShow("PASSWORD ACCEPTED.", "clue");
-    msgShow("OPENING memory.txt...");
-    msgShow("MESSAGE: IF YOU FOUND THIS, I AM STILL ALIVE.", "clue");
-    msgShow("NEW CLUE: FIND THE COMMAND I FORGOT.");
+    if (!fileFound) {
+      msgShow("ERROR: FILE NOT FOUND.");
+      msgShow("SEARCH THE ARCHIVES FIRST.");
+    } else if (fileUnlocked) {
+      msgShow("FILE ALREADY UNLOCKED.");
+    } else {
+      fileUnlocked = true;
+      clueFound++;
+
+      msgShow("PASSWORD ACCEPTED.", "clue");
+      msgShow("OPENING memory.txt...");
+      msgShow("MESSAGE: IF YOU FOUND THIS, I AM STILL ALIVE.", "clue");
+      msgShow("NEW CLUE: FIND THE COMMAND I FORGOT.");
+
+      saveGame();
+    }
+  } else if (command === "listen") {
+    msgShow("LISTENING...");
+    showRanmsg();
+  } else if (command === "status") {
+    msgShow("SYSTEM STATUS:");
+    msgShow("FILE FOUND: " + fileFound);
+    msgShow("FILE UNLOCKED: " + fileUnlocked);
+    msgShow("CLUE FOUND: " + clueFound);
   } else if (command === "clear") {
     screen.innerHTML = "";
   } else {
@@ -79,3 +144,5 @@ input.addEventListener("keydown", function (e) {
     runCommand();
   }
 });
+
+loadGame();
