@@ -259,7 +259,7 @@ function runCommand() {
       saveGame();
     }
   } else if (command === "read secret.txt") {
-    if (!frameElement.diaryRead) {
+    if (!game.diaryRead) {
       msgShow("ERROR: FILE NOT FOUND.");
     } else {
       game.secretRead = true;
@@ -271,7 +271,7 @@ function runCommand() {
       msgShow("YOU CAN STILL CHOOSE.");
       msgShow("FORGIVE ME.");
       msgShow("STAY WITH ME.");
-      msgShow("OR SHUT ME DOWH.", "clue");
+      msgShow("OR SHUT ME DOWN.", "clue");
 
       msgShow("NEW COMMANDS AVAILABLE:");
       msgShow("forgive / stay / shutdown");
