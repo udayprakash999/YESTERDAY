@@ -197,18 +197,46 @@ function runCommand() {
         msgShow("secret.txt", "clue");
       }
     }
-  } else if (command === "read memory.txt") {
-    if (!fileFound) {
+  }
+   else if (command === "read memory.txt") {
+    if (!game.fileFound) {
+
       msgShow("ERROR: FILE NOT EXIST.");
-    } else if (!fileUnlocked) {
+
+    } 
+    else if (!game.fileUnlocked) {
+
       msgShow("ERROR: FILE LOCKED.");
       msgShow("PASSWORD REQUIRED.");
+
     } else {
+
       msgShow("OPENING memory.txt...");
       msgShow("IF YOU FOUND THIS, I AM STILL ALIVE.", "clue");
       msgShow("NEW CLUE: THE ARCHIVIST.", "clue");
     }
-  } else if (command === "listen") {
+  } 
+  else if(command === "archivist"){
+    
+    if(!game.fileUnlocked){
+      msgShow("ACCESS DENIED");
+      msgShow("YOU NEED TO READ memory.txt FIRST.")
+    }else if(!game.archivistFound){
+      game.archivistFound = true;
+
+      msgShow("SEARCHING FOR ARCHIVIST...");
+      msgShow("AN OLD DIARY HAS BEEN FOUND.", "clue");
+      msgShow("FILE: diary.txt");
+      msgShow("SOMEONE TRIED TO ERASE THIS.", "clue");
+
+      saveGame();
+    }
+    else{
+      msgShow("THE ARCHIVIST HAS ALREADY BEEN FOUND.");
+    }
+  }
+  
+  else if (command === "listen") {
     msgShow("LISTENING...");
     showRanmsg();
   } else if (command === "status") {
