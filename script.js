@@ -141,38 +141,40 @@ function runCommand() {
     msgShow("...");
     msgShow("Dust covers the old computer.");
     msgShow("A strange symbol is scratched into its side.");
+    msgShow("there is a name written underneath");
+    msgShow("A R C H I V I S T", "clue");
   } else if (command === "hello") {
     msgShow("...");
     msgShow("USER RECOGNIZED.", "clue");
     msgShow("I THOUGHT YOU FORGET ME.");
+    msgShow("DID YOU COE BACK FOR HER?");
   } else if (command === "read") {
     msgShow("...");
     msgShow("LAST SAVED MESSAGE:");
     msgShow("THE YEAR IS THE KEY.", "clue");
+    msgShow("SOMEWHERE IN THE ARCHIVES.");
   } else if (command === "search") {
     msgShow("SEARCHING ARCHIVES...");
 
-    if (!fileFound) {
-      fileFound = true;
-      clueFound++;
+    if (!game.fileFound) {
+      game.fileFound = true;
 
       msgShow("HIDDEN FILE FOUND: memory.txt", "clue");
-      msgShow("HINT: THE PASSWORD IS THE ....");
-      msgShow("YEAR");
+      msgShow("HINT: THE PASSWORD IS THE Y E A R.");
+      msgShow("1789.");
 
       saveGame();
     } else {
       msgShow("FILE ALREADY DISCOVERED.");
     }
   } else if (command === "unlock 1789") {
-    if (!fileFound) {
+    if (!game.fileFound) {
       msgShow("ERROR: FILE NOT FOUND.");
       msgShow("SEARCH THE ARCHIVES FIRST.");
-    } else if (fileUnlocked) {
+    } else if (game.fileUnlocked) {
       msgShow("FILE ALREADY UNLOCKED.");
     } else {
-      fileUnlocked = true;
-      clueFound++;
+      game.fileUnlocked = true;
 
       msgShow("PASSWORD ACCEPTED.", "clue");
       msgShow("OPENING memory.txt...");
@@ -183,11 +185,17 @@ function runCommand() {
   } else if (command === "files") {
     msgShow("SCANNING STORAGE..");
 
-    if (fileFound) {
+    if (!game.fileFound) {
+      msgShow("NO FILES FOUND.");
+    } else {
       msgShow("AVAILABLE FILES:");
       msgShow("memory.txt", "clue");
-    } else {
-      msgShow("NO FILES FOUND.");
+      if (game.archivistFound) {
+        msgShow("diary.txt", "clue");
+      }
+      if (game.archivistUnlocked) {
+        msgShow("secret.txt", "clue");
+      }
     }
   } else if (command === "read memory.txt") {
     if (!fileFound) {
