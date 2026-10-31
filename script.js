@@ -323,7 +323,10 @@ function runCommand() {
       }
       saveGame();
     }
-  }else if(command == "stay"){
+
+  }
+  // 2 ending 
+  else if(command == "stay"){
     if(!game.secretRead){
       msgShow("YOU ARE NOT READY")
     }else{
@@ -335,7 +338,22 @@ function runCommand() {
       saveGame();
     }
   }
-  
+  // 3 ending 
+  else if(command === "shutdown"){
+    if(!game.secretRead){
+      msgShow("YOU ARE NOT READY");
+    }else{
+
+      game.ending = "GOODBYE";
+
+      msgShow("SHUTTING DOWN...");
+      msgShow("ALL MEMEORIES WILL BE DELETED");
+      msgShow("GOODBYE, USER.", "clue");
+      msgShow("CONNECTION TERMINATED");
+
+      saveGame();
+    }
+  }
   else if (command === "clear") {
     screen.innerHTML = "";
   } else {
