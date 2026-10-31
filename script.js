@@ -258,7 +258,7 @@ function runCommand() {
 
       saveGame();
     }
-  } else if (command === " read secret.txt") {
+  } else if (command === "read secret.txt") {
     if (!frameElement.diaryRead) {
       msgShow("ERROR: FILE NOT FOUND.");
     } else {
