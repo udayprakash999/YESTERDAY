@@ -31,13 +31,23 @@ const randomMsg = [
 
 function msgShow(msg, className = "") {
   const line = document.createElement("p");
-  line.textContent = msg;
 
   if (className) {
     line.className = className;
   }
   screen.appendChild(line);
-  screen.scrollTop = screen.scrollHeight;
+
+  let index = 0;
+
+  function typeLetter(){
+    if(index < msg.length){
+      line.textContent += msg.charAt(index);
+      index++;
+      screen.scrollTop = screen.scrollHeight;
+      setTimeout(typeLetter,34);
+    }
+  }
+  typeLetter();
 }
 function showRanmsg() {
   const index = Math.floor(Math.random() * randomMsg.length);
@@ -304,7 +314,9 @@ function runCommand() {
         msgShow(index + 1 + "." + item);
       });
     }
-  } else if (command === "forgive") {
+  } 
+  // 1 ending 
+  else if (command === "forgive") {
     if (!game.secretRead) {
       msgShow("YOU ARE NOT READY.");
     } else {
