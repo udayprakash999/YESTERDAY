@@ -37,7 +37,7 @@ h1 {
 }
 .screen-container {
   height: 350px;
-  overflow: hidden;
+  overflow-y: auto;
   background: #050805;
   border: 1px solid #376b3e;
   padding: 20px;
@@ -95,7 +95,7 @@ button{
 }
 button:hover{
   background: #ffffff;
-  box-sizing: 0 0 15px #70ff83;
+  box-shadow: 0 0 15px #70ff83;
 }
 button:active{
   transform: scale(0.92);

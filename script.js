@@ -193,7 +193,7 @@ function runCommand() {
       if (game.archivistFound) {
         msgShow("diary.txt", "clue");
       }
-      if (game.archivistUnlocked) {
+      if (game.diaryRead) {
         msgShow("secret.txt", "clue");
       }
     }
@@ -323,13 +323,12 @@ function runCommand() {
       }
       saveGame();
     }
-
   }
-  // 2 ending 
-  else if(command == "stay"){
-    if(!game.secretRead){
-      msgShow("YOU ARE NOT READY")
-    }else{
+  // 2 ending
+  else if (command == "stay") {
+    if (!game.secretRead) {
+      msgShow("YOU ARE NOT READY");
+    } else {
       game.ending = "THE LAST CONNECTION";
       msgShow("CONNECTION STABILIZED");
       msgShow("YOU DECIDED TO STAY");
@@ -338,12 +337,11 @@ function runCommand() {
       saveGame();
     }
   }
-  // 3 ending 
-  else if(command === "shutdown"){
-    if(!game.secretRead){
+  // 3 ending
+  else if (command === "shutdown") {
+    if (!game.secretRead) {
       msgShow("YOU ARE NOT READY");
-    }else{
-
+    } else {
       game.ending = "GOODBYE";
 
       msgShow("SHUTTING DOWN...");
@@ -353,17 +351,19 @@ function runCommand() {
 
       saveGame();
     }
-  }
-  else if (command === "clear") {
+  } else if (command === "clear") {
     screen.innerHTML = "";
+  } else if (command === "reset") {
+    input.value = "";
+    resetGame();
   } else {
-    msgShow("UNKNOWN COMMAND.");
+    msgShow("UNKNOWN COMMAND");
     msgShow("Type 'help' to see available commands.");
-  }
-  input.value = "";
-  input.focus();
-}
 
+    input.value = "";
+    input.focus();
+  }
+}
 // run btn - onclick
 runBtn.addEventListener("click", runCommand);
 
@@ -391,6 +391,8 @@ input.addEventListener("keydown", function (e) {
       historyIndex = commandHistory.length;
       input.value = "";
     }
+    input.value = "";
+    input.focus();
   }
 });
 
