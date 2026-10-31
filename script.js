@@ -2,9 +2,16 @@ const screen = document.getElementById("screen");
 const input = document.getElementById("command");
 const runBtn = document.getElementById("runbtn");
 
-let fileFound = false;
-let fileUnlocked = false;
-let clueFound = 0;
+let game = {
+  fileFound: false,
+  fileUnlocked: false,
+  archivistFound: false,
+  archivistUnlocked: false,
+  diaryRead: false,
+  secretRead: false,
+  listened: false,
+  ending: null,
+};
 
 // history
 let commandHistory = [];
@@ -18,6 +25,8 @@ const randomMsg = [
   "DO NOT TRUST THE ARCHIVES.",
   "I REMEMBER EVERYTHING.",
   "ARE YOU STILL THERE?",
+  "YOU WERE NOT SUPPOSED TO FIND THIS.",
+  "THE ARCHIVIST IS WATCHING.",
 ];
 
 function msgShow(msg, className = "") {
@@ -31,35 +40,43 @@ function msgShow(msg, className = "") {
   screen.scrollTop = screen.scrollHeight;
 }
 function showRanmsg() {
-  const randomIndex = Math.floor(Math.random() * randomMsg.length);
-  msgShow(randomMsg[randomIndex], "clue");
+  const index = Math.floor(Math.random() * randomMsg.length);
+  msgShow(randomMsg[index], "clue");
 }
 //save game
 function saveGame() {
-  const gameData = {
-    fileFound: fileFound,
-    fileUnlocked: fileUnlocked,
-    clueFound: clueFound,
-  };
-  localStorage.setItem("yesterdaySave", JSON.stringify(gameData));
+  localStorage.setItem("yesterdaySave", JSON.stringify(game));
 }
 
 //load
 function loadGame() {
   const savedGame = localStorage.getItem("yesterdaySave");
 
-  if (savedGame) {
+  if (!savedGame) return;
+  
     try {
-      const gameData = JSON.parse(savedGame);
+      const data = JSON.parse(savedGame);
 
-      fileFound = gameData.fileFound === true;
-      fileUnlocked = gameData.fileUnlocked === true;
-      clueFound = Number(gameData.clueFound) || 0;
-    } catch (err) {
+      const keys = [
+        "fileFound",
+        "fileUnlocked",
+        "archivistFound",
+        "archivistUnlocked",
+        "diaryRead",
+        "secretRead",
+        "listened"
+      ];
+
+      keys.forEach(key =>{
+        game[key]= data[key]=== true;
+      });
+
+      game.ending = typeof data.ending === "string" ? data.ending: null;
+    } catch (error) {
       console.log("savefile failed");
     }
   }
-}
+
 function runCommand() {
   const command = input.value.trim().toLowerCase();
 
@@ -163,7 +180,7 @@ runBtn.addEventListener("click", runCommand);
 input.addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
     const command = input.value.trim();
-    if(command !== ""){
+    if (command !== "") {
       commandHistory.push(command);
       historyIndex = commandHistory.length;
     }
