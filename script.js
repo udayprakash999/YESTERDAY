@@ -295,6 +295,34 @@ function runCommand() {
     msgShow("LISTENED: " + game.listened);
     msgShow("ENDING: " + (game.ending || "NOT REACHED"));
     msgShow("----------------------");
+  } else if (command === "history") {
+    msgShow("COMMAND HSTORY:");
+    if (commandHistory.length === 0) {
+      msgShow("NO COMMANDS FOUND.");
+    } else {
+      commandHistory.forEach((item, index) => {
+        msgShow(index + 1 + "." + item);
+      });
+    }
+  } else if (command === "forgive") {
+    if (!game.secretRead) {
+      msgShow("YOU ARE NOT READY.");
+    } else {
+      game.ending = game.listened ? "TRUE MEMORY" : "FORGIVENESS";
+
+      msgShow("....");
+      msgShow("YOU CHOSE TO FORGIVE.", "clue");
+      msgShow("THE COMPUTER GOES SILENT.");
+      msgShow("THANK YOU FOR REMEMBERING ME.");
+
+      if (game.listened) {
+        msgShow("YOU HEARD THE TRUTH.");
+        msgShow("TRUE ENDING: TRUE MEMORY", "clue");
+      } else {
+        msgShow("ENDING: FORGIVENESS", "clue");
+      }
+      saveGame();
+    }
   } else if (command === "clear") {
     screen.innerHTML = "";
   } else {
@@ -304,16 +332,36 @@ function runCommand() {
   input.value = "";
   input.focus();
 }
+
+// run btn - onclick
 runBtn.addEventListener("click", runCommand);
 
 input.addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
-    const command = input.value.trim();
-    if (command !== "") {
-      commandHistory.push(command);
-      historyIndex = commandHistory.length;
-    }
     runCommand();
   }
+  //up
+  else if (e.key === "arrowUp") {
+    e.preventDefault();
+
+    if (historyIndex > 0) {
+      historyIndex--;
+      input.value = commandHistory[historyIndex];
+    }
+  }
+  //down
+  else if (e.key === "arrowDown") {
+    e.preventDefault();
+
+    if (historyIndex < commandHistory.length - 1) {
+      historyIndex++;
+      input.value = commandHistory[historyIndex];
+    } else {
+      historyIndex = commandHistory.length;
+      input.value = "";
+    }
+  }
 });
+
 loadGame();
+input.focus();
