@@ -47,6 +47,7 @@ h1 {
   gap: 8px;
   font-size: 1.3rem;
   line-height: 1.2;
+  scroll-behavior: smooth;
 }
 .screen-container p {
   overflow-wrap: anywhere;
