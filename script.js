@@ -323,7 +323,20 @@ function runCommand() {
       }
       saveGame();
     }
-  } else if (command === "clear") {
+  }else if(command == "stay"){
+    if(!game.secretRead){
+      msgShow("YOU ARE NOT READY")
+    }else{
+      game.ending = "THE LAST CONNECTION";
+      msgShow("CONNECTION STABILIZED");
+      msgShow("YOU DECIDED TO STAY");
+      msgShow("WELCOME HOME, USER.", "clue");
+
+      saveGame();
+    }
+  }
+  
+  else if (command === "clear") {
     screen.innerHTML = "";
   } else {
     msgShow("UNKNOWN COMMAND.");
