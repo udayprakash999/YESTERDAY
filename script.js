@@ -285,9 +285,16 @@ function runCommand() {
     saveGame();
   } else if (command === "status") {
     msgShow("SYSTEM STATUS:");
-    msgShow("FILE FOUND: " + fileFound);
-    msgShow("FILE UNLOCKED: " + fileUnlocked);
-    msgShow("CLUE FOUND: " + clueFound);
+    msgShow("----------------------");
+    msgShow("MEMORY FOUND: " + game.fileFound);
+    msgShow("MEMORY UNLOCKED: " + game.fileUnlocked);
+    msgShow("ARCHIVIST FOUND: " + game.archivistFound);
+    msgShow("DIARY UNLOCKED: " + game.archivistUnlocked);
+    msgShow("DIARY READ: " + game.diaryRead);
+    msgShow("SECRET FOUND: " + game.secretRead);
+    msgShow("LISTENED: " + game.listened);
+    msgShow("ENDING: " + (game.ending || "NOT REACHED"));
+    msgShow("----------------------");
   } else if (command === "clear") {
     screen.innerHTML = "";
   } else {
