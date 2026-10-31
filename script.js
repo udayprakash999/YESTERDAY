@@ -53,30 +53,55 @@ function loadGame() {
   const savedGame = localStorage.getItem("yesterdaySave");
 
   if (!savedGame) return;
-  
-    try {
-      const data = JSON.parse(savedGame);
 
-      const keys = [
-        "fileFound",
-        "fileUnlocked",
-        "archivistFound",
-        "archivistUnlocked",
-        "diaryRead",
-        "secretRead",
-        "listened"
-      ];
+  try {
+    const data = JSON.parse(savedGame);
 
-      keys.forEach(key =>{
-        game[key]= data[key]=== true;
-      });
+    const keys = [
+      "fileFound",
+      "fileUnlocked",
+      "archivistFound",
+      "archivistUnlocked",
+      "diaryRead",
+      "secretRead",
+      "listened",
+    ];
 
-      game.ending = typeof data.ending === "string" ? data.ending: null;
-    } catch (error) {
-      console.log("savefile failed");
-    }
+    keys.forEach((key) => {
+      game[key] = data[key] === true;
+    });
+
+    game.ending = typeof data.ending === "string" ? data.ending : null;
+  } catch (error) {
+    console.log("savefile failed");
   }
+}
+function resetGame() {
+  const confirmReset = confirm("are you sure? All progress will be lost.");
 
+  if (!confirmReset) return;
+
+  localStorage.removeItem("yesterdaySave");
+
+  game = {
+    fileFound: false,
+    fileUnlocked: false,
+    archivistFound: false,
+    archivistUnlocked: false,
+    diaryRead: false,
+    secretRead: false,
+    listened: false,
+    ending: null,
+  };
+
+  commandHistory = [];
+  historyIndex = -1;
+
+  screen.innerHTML = "";
+
+  msgShow("SYSTEM RESET");
+  msgShow("WELCOME BACK, USER");
+}
 function runCommand() {
   const command = input.value.trim().toLowerCase();
 
