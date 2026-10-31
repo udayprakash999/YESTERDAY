@@ -13,6 +13,7 @@ body {
   background: #080b08;
   color: #70ff83;
   padding: 20px;
+  min-height: 100vh;
 }
 .computer {
   max-width: 750px;
@@ -20,18 +21,82 @@ body {
   padding: 25px;
   background: #0b100b;
   border: 2px solid #376b3e;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 h1 {
   letter-spacing: 4px;
   text-shadow: 0 0 10px #70ff83;
+  font-size: 3rem;
 }
 .status {
+  font-size: 1.2rem;
   color: #67976c;
 }
+.screen-container {
+  height: 350px;
+  overflow: hidden;
+  background: #050805;
+  border: 1px solid #376b3e;
+  padding: 20px;
 
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 1.3rem;
+  line-height: 1.2;
+}
+.screen-container p {
+  overflow-wrap: anywhere;
+}
+.screen-container span{
+  color: #e9d58b;
+}
 #screen .user {
   color: white;
 }
 #screen .clue {
   color: #e9d58b;
+  text-shadow: 0 0 5px #e9d58b;
+}
+.input-area{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.5rem;
+}
+.input-area span{
+  color: #70ff83;
+}
+input{
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #376b3e;
+  outline: none;
+  color: #70ff83;
+  padding: 10px;
+  font-size: 1.3rem;
+}
+input::placeholder{
+  color: #426447;
+}
+button{
+  background: #70ff83;
+  color: #080b08;
+  padding: 10px 20px;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button:hover{
+  background: #ffffff;
+  box-sizing: 0 0 15px #70ff83;
+}
+button:active{
+  transform: scale(0.92);
 }
