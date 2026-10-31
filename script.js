@@ -103,37 +103,40 @@ function resetGame() {
   msgShow("WELCOME BACK, USER");
 }
 //commnds
-function showHelp(){
-    msgShow("AVAILABLE COMMANDS:");
-    msgShow("--------------------------------------------------------"),
-    msgShow("help - show commands");
-    msgShow("look - Inspect the computer");
-    msgShow("hello - Talk to the computer");
-    msgShow("read - Find a mysterious message");
-    msgShow("search - Search the archives");
-    msgShow("unlock 1789 - Unlock hidden files");
-    msgShow("Files - View Discovered files");
-    msgShow("Read memory.txt - Read the hidden file");
-    msgShow("archivist - find the forgotten command");
-    msgShow("unlock 0426 - unlock the diary");
-    msgShow("read diary.txt - Read the diary");
-    msgShow("read secret.txt - read the final file"),
-    msgShow("listen - Listen to the computer");
-    msgShow("status - Check your progress");
-    msgShow("history - view command history");
-    msgShow("clear - Clear the screen");
-    msgShow("reset - reset the game");
-    msgShow("--------------------------------------------------------");
+function showHelp() {
+  msgShow("AVAILABLE COMMANDS:");
+  (msgShow("--------------------------------------------------------"),
+    msgShow("help - show commands"));
+  msgShow("look - Inspect the computer");
+  msgShow("hello - Talk to the computer");
+  msgShow("read - Find a mysterious message");
+  msgShow("search - Search the archives");
+  msgShow("unlock 1789 - Unlock hidden files");
+  msgShow("Files - View Discovered files");
+  msgShow("Read memory.txt - Read the hidden file");
+  msgShow("archivist - find the forgotten command");
+  msgShow("unlock 0426 - unlock the diary");
+  msgShow("read diary.txt - Read the diary");
+  (msgShow("read secret.txt - read the final file"),
+    msgShow("listen - Listen to the computer"));
+  msgShow("status - Check your progress");
+  msgShow("history - view command history");
+  msgShow("clear - Clear the screen");
+  msgShow("reset - reset the game");
+  msgShow("--------------------------------------------------------");
 }
-
 function runCommand() {
   const command = input.value.trim().toLowerCase();
 
   if (command === "") return;
+
   msgShow(">" + command, "user");
 
+  commandHistory.push(command);
+  historyIndex = commandHistory.length;
+  //help
   if (command === "help") {
-  
+    showHelp();
   } else if (command === "look") {
     msgShow("...");
     msgShow("Dust covers the old computer.");
