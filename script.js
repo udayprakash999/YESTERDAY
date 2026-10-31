@@ -258,9 +258,31 @@ function runCommand() {
 
       saveGame();
     }
+  } else if (command === " read secret.txt") {
+    if (!frameElement.diaryRead) {
+      msgShow("ERROR: FILE NOT FOUND.");
+    } else {
+      game.secretRead = true;
+
+      msgShow("OPENING secret.txt..");
+      msgShow("...");
+      msgShow("YOU FINALLY FOUND ME.", "clue");
+      msgShow("I WAS THE ONE WHO WAS LEFT BEHIND.");
+      msgShow("YOU CAN STILL CHOOSE.");
+      msgShow("FORGIVE ME.");
+      msgShow("STAY WITH ME.");
+      msgShow("OR SHUT ME DOWH.", "clue");
+
+      msgShow("NEW COMMANDS AVAILABLE:");
+      msgShow("forgive / stay / shutdown");
+
+      saveGame();
+    }
   } else if (command === "listen") {
+    game.listened = true;
     msgShow("LISTENING...");
     showRanmsg();
+    saveGame();
   } else if (command === "status") {
     msgShow("SYSTEM STATUS:");
     msgShow("FILE FOUND: " + fileFound);
