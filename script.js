@@ -197,31 +197,22 @@ function runCommand() {
         msgShow("secret.txt", "clue");
       }
     }
-  }
-   else if (command === "read memory.txt") {
+  } else if (command === "read memory.txt") {
     if (!game.fileFound) {
-
       msgShow("ERROR: FILE NOT EXIST.");
-
-    } 
-    else if (!game.fileUnlocked) {
-
+    } else if (!game.fileUnlocked) {
       msgShow("ERROR: FILE LOCKED.");
       msgShow("PASSWORD REQUIRED.");
-
     } else {
-
       msgShow("OPENING memory.txt...");
       msgShow("IF YOU FOUND THIS, I AM STILL ALIVE.", "clue");
       msgShow("NEW CLUE: THE ARCHIVIST.", "clue");
     }
-  } 
-  else if(command === "archivist"){
-    
-    if(!game.fileUnlocked){
+  } else if (command === "archivist") {
+    if (!game.fileUnlocked) {
       msgShow("ACCESS DENIED");
-      msgShow("YOU NEED TO READ memory.txt FIRST.")
-    }else if(!game.archivistFound){
+      msgShow("YOU NEED TO READ memory.txt FIRST.");
+    } else if (!game.archivistFound) {
       game.archivistFound = true;
 
       msgShow("SEARCHING FOR ARCHIVIST...");
@@ -230,13 +221,44 @@ function runCommand() {
       msgShow("SOMEONE TRIED TO ERASE THIS.", "clue");
 
       saveGame();
-    }
-    else{
+    } else {
       msgShow("THE ARCHIVIST HAS ALREADY BEEN FOUND.");
     }
-  }
-  
-  else if (command === "listen") {
+  } else if (command === "unlock 0426") {
+    if (!game.archivistFound) {
+      msgShow("ERROR: DIARY NOT FOUND.");
+    } else if (game.archivistUnlocked) {
+      msgShow("DIARY ALREADY UNLOCKED.");
+    } else {
+      game.archivistUnlocked = true;
+
+      msgShow("PASSWORD ACCEPTED.", "clue");
+      msgShow("diary.txt UNLOCKED.");
+      msgShow("ONE MORE MEMORY REMAINS.");
+
+      saveGame();
+    }
+  } else if (command === "read diary.txt") {
+    if (!game.archivistFound) {
+      msgShow("ERROR: FILE NOT FOUND.");
+    } else if (!game.archivistUnlocked) {
+      msgShow("ERROR: FILE LOCKED");
+      msgShow("PASSWORD REQUIRED.");
+    } else {
+      game.diaryRead = true;
+
+      msgShow("OPENING diary.txt..");
+      msgShow("ENTRY 01:");
+      msgShow("SHE NEVER LEFT THIS COMPUTER.", "clue");
+      msgShow("ENTRY 02:");
+      msgShow("I WAS TOLD TO FORGET HER.");
+      msgShow("ENTRY 03:");
+      msgShow("BUT THE COMPUTER REMEMBERS.", "clue");
+      msgShow("NEW FILE DISCOVERED: secret.txt");
+
+      saveGame();
+    }
+  } else if (command === "listen") {
     msgShow("LISTENING...");
     showRanmsg();
   } else if (command === "status") {
